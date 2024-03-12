@@ -1,0 +1,30 @@
+.board {
+    width: 75vh;
+    height: 75vh;
+    background-color: #f0f0f0;
+    border: 1px solid grey;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.square {
+
+    float: left;
+    width: calc(75vh / 8);
+    height: calc(75vh / 8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.piece {
+    width: calc(75vh / 8);
+    height: calc(75vh / 8);
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: auto;
+}
