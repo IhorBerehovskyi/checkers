@@ -14,17 +14,21 @@
     float: left;
     width: calc(75vh / 8);
     height: calc(75vh / 8);
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
 
-.piece {
+/*.piece {
     width: calc(75vh / 8);
     height: calc(75vh / 8);
     background-size: 80% 80%;
     background-repeat: no-repeat;
     background-position: center;
     margin: auto;
-}
+}*/
