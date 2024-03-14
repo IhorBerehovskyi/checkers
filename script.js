@@ -20,14 +20,18 @@ function createMarking(){
 
         let square = document.createElement('div');
         let isWhitePeace = (i + Math.floor(i / 8)) % 2 == 0;
+
         square.className = 'square';
         square.style.backgroundColor = isWhitePeace ? 'white' : 'gray';
         square.id = isWhitePeace ? 'w' : i;
+        square.lady = false;
+        square.checker = 'none';
 
         if ((i < 24 || i > 39) && !isWhitePeace) {
-            square.style.backgroundImage = "url(" + (i < SQUARES_COUNT / 2 ? 'images/black.png' : 'images/white.png') + ")";
+            square.style.backgroundImage = "url(" + (i < SQUARES_COUNT / 2 ? 'images/blackQ.png' : 'images/whiteQ.png') + ")";
+            square.checker = i < SQUARES_COUNT / 2 ? 'b' : 'w';
         }
-
+       
         board.appendChild(square);
 
         square.addEventListener('click', function() {
@@ -57,24 +61,37 @@ function squareClick(squreId) {
 
             let diff = parseInt(squareElement.id) - parseInt(currentSquare.id);
 
-            console.log(diff);
-
-            if(diff == 7 || diff == 9 || diff == -9 || diff == -7){
+            if((diff == 7 || diff == 9) && currentSquare.checker == 'w')
+                return;
+            
+            if((diff == -7 || diff == -9) && currentSquare.checker == 'b')
+                return;
+            
+            if(diff != 7 && diff != 9 && diff != -9 && diff != -7)
+                return;
+            
+            if (squareElement.checker === 'none') {
 
                 squareElement.style.backgroundImage = currentSquare.style.backgroundImage;
                 currentSquare.style.backgroundColor = 'gray';
-
                 currentSquare.style.backgroundImage = null;
+
+                squareElement.checker = currentSquare.checker;
+                currentSquare.checker = 'none';
 
                 currentWhiteMove = !currentWhiteMove;
                 currentSquare = null;
 
             }
+
         }
     }
 
     //тепер дозволяти хід тільки згідно з правилами шашок
 
+    //забрати можливість ходити назад
+
+    //останній ряд це буде дамка треба перевірку і заміну + глобальну змінну чи ще щось на чек дамки
   
 }
 
