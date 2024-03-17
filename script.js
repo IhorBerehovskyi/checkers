@@ -10,13 +10,13 @@ let currentSquare = null;
 let currentWhiteMove = true;
 
 let boardPos = [[-1, 2, -1, 2, -1, 2, -1, 2],
-                [2, -1, 2, -1, 2, -1, 2, -1],
-                [-1, 2, -1, 2, -1, 2, -1, 2],
-                [0, -1, 0, -1, 0, -1, 0, -1],
-                [-1, 0, -1, 0, -1, 0, -1, 0],
-                [1, -1, 1, -1, 1, -1, 1, -1],
-                [-1, 1, -1, 1, -1, 1, -1, 1],
-                [1, -1, 1, -1, 1, -1, 1, -1]];
+    [2, -1, 2, -1, 2, -1, 2, -1],
+    [-1, 2, -1, 2, -1, 2, -1, 2],
+    [0, -1, 0, -1, 0, -1, 0, -1],
+    [-1, 0, -1, 0, -1, 0, -1, 0],
+    [1, -1, 1, -1, 1, -1, 1, -1],
+    [-1, 1, -1, 1, -1, 1, -1, 1],
+    [1, -1, 1, -1, 1, -1, 1, -1]];
 
 //white for start буде висіти менюшка
 //createMenu
@@ -28,7 +28,7 @@ function createMarking(){
 
     for(let i = 0; i < boardPos.length; i++){
         for (let j = 0; j < boardPos[0].length; j++) {
-            
+
             let square = document.createElement('div');
 
             square.className = 'square';
@@ -59,20 +59,20 @@ function squareClick(squreId, i, j) {
     if(boardPos[i][j] == -1){
         return;
     }
-    
+
     setFocus(squareElement, i, j);
 
     makeMove(squareElement, i, j);
 
-  
 }
 
 function setFocus(squareElement, i , j) {
 
     if ((boardPos[i][j] == 1 && !currentWhiteMove) 
         || (boardPos[i][j] == 2 && currentWhiteMove)
-        || boardPos[i][j] == 0){
-        return;
+        || (boardPos[i][j] == 0)){
+
+            return;
     }
 
     if (squareElement !== currentSquare) {
@@ -83,12 +83,16 @@ function setFocus(squareElement, i , j) {
         currentSquare = squareElement;
     }
     squareElement.style.backgroundColor = '#989898';
+    console.log("ep");
 }
 
 function makeMove(squareElement, i, j) {
 
-    if (squareElement === currentSquare || boardPos[i][j] == -1 || !currentSquare)
+    if (squareElement === currentSquare || boardPos[i][j] == -1 || !currentSquare){
+        console.log(i,j);
         return;
+
+    }
 
     //маю id куди маю попасти
     //маю елемент з якого буду стрибати
@@ -96,51 +100,82 @@ function makeMove(squareElement, i, j) {
 
     let currentID = currentSquare.id.split('').map(Number);
 
-    console.log(currentID);
+    //звичайний хід
+    if ((((currentID[1] - j) === 1) || ((currentID[1] - j) === -1)) &&
+        (((currentID[0] - i) === 1) || ((currentID[0] - i) === -1))){
 
-    console.log(currentID[1] -j);
+        //якщо є блокуюча шашка
+        if(boardPos[i][j] > 0){
+            return;
+        }
 
-    console.log("currentID");
+        //заборона руху назад
+        if(boardPos[currentID[0]][currentID[1]] === 1){
 
-    console.log(currentID[1] - j);
+            if(i > currentID[0]){
+                //цього не буде якшо дамка
+                return;
+            }
 
-    
+        }
+        else{
+            //black
+            if(i < currentID[0]){
+                return;
+            }
 
-    if (((currentID[1] - j) !== 1) && ((currentID[1] - j) !== -1)){
-        return;
+        }
+
+        squareElement.style.backgroundImage = currentSquare.style.backgroundImage;
+        currentSquare.style.backgroundColor = 'gray';
+        currentSquare.style.backgroundImage = null;
+
+        boardPos[i][j] = boardPos[currentID[0]][currentID[1]];
+        boardPos[currentID[0]][currentID[1]] = 0;
+
+        currentWhiteMove = !currentWhiteMove;
+        currentSquare = null;
+        console.log(boardPos);
     }
 
     //якщо 3 то перестрибувати
+    else if ((((currentID[1] - j) === 2) || ((currentID[1] - j) === -2)) &&
+        (((currentID[0] - i) === 2) || ((currentID[0] - i) === -2))){
 
-    if(boardPos[currentID[0]][currentID[1]] === 1){
-
-        if(i > currentID[0]){
+        if(boardPos[i][j] !== 0 || (boardPos[(i+currentID[0])/2][(j+currentID[1])/2] === 0))
             return;
-        }
 
-        //перевірити чи перед ним є фішка і якого кольору типу 
-        //якщо свого то
-
-    }
-    else{
-        //black
-        if(i < currentID[0]){
+        if(boardPos[currentID[0]][currentID[1]] === boardPos[(i+currentID[0])/2][(j+currentID[1])/2])
             return;
-        }
 
-        //перевірити чи перед ним є фішка і якого кольору
+
+         console.log("udar");
+
+        squareElement.style.backgroundImage = currentSquare.style.backgroundImage;
+        currentSquare.style.backgroundColor = 'gray';
+        currentSquare.style.backgroundImage = null;
+
+        boardPos[i][j] = boardPos[currentID[0]][currentID[1]];
+        boardPos[currentID[0]][currentID[1]] = 0;
+
+        //видалити заміну і змінення поточного якщо можливий удар з нових координат пс. мультиудар
+        currentWhiteMove = !currentWhiteMove;
+        currentSquare = null;
+
+        boardPos[(i+currentID[0])/2][(j+currentID[1])/2] = 0;
+
+        let deletedId = ((i+currentID[0])/2).toString() + ((j+currentID[1])/2).toString();
+        console.log(deletedId);
+        document.getElementById(deletedId).style.backgroundImage = null;
+
+        console.log(boardPos);
+
+        то оновлювати шось і рекурсію в цей метод
     }
 
-    console.log("asdf");
-    squareElement.style.backgroundImage = currentSquare.style.backgroundImage;
-    currentSquare.style.backgroundColor = 'gray';
-    currentSquare.style.backgroundImage = null;
 
-    boardPos[i][j] = boardPos[currentID[0]][currentID[1]];
-    boardPos[currentID[0]][currentID[1]] = 0;
 
-    currentWhiteMove = !currentWhiteMove;
-    currentSquare = null;
+
 }
 
 
