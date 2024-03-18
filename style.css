@@ -24,11 +24,50 @@
 
 }
 
-/*.piece {
-    width: calc(75vh / 8);
-    height: calc(75vh / 8);
-    background-size: 80% 80%;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin: auto;
-}*/
+@media (orientation: portrait) {
+    .board {
+        width: 75vw;
+        height: 75vw; 
+    }
+
+    .square {
+        width: calc(75vw / 8);
+        height: calc(75vw / 8);
+    }
+}
+
+@media (orientation: landscape) {
+    .board {
+        width: 75vh;
+        height: 75vh; 
+    }
+
+    .square {
+        width: calc(75vh / 8);
+        height: calc(75vh / 8);
+    }
+}
+
+@media (max-width: 800px) and (orientation: portrait) {
+    .board {
+        width: 90vw;
+        height: 90vw;
+    }
+
+    .square {
+        width: calc(90vw / 8);
+        height: calc(90vw / 8);
+    }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+    .board {
+        width: 90vh;
+        height: 90vh; 
+    }
+
+    .square {
+        width: calc(90vh / 8);
+        height: calc(90vh / 8);
+    }
+}

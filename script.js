@@ -157,11 +157,6 @@ function makeMove(squareElement, i, j) {
 
         boardPos[i][j] = boardPos[currentID[0]][currentID[1]];
         boardPos[currentID[0]][currentID[1]] = 0;
-
-        //видалити заміну і змінення поточного якщо можливий удар з нових координат пс. мультиудар
-        currentWhiteMove = !currentWhiteMove;
-        currentSquare = null;
-
         boardPos[(i+currentID[0])/2][(j+currentID[1])/2] = 0;
 
         let deletedId = ((i+currentID[0])/2).toString() + ((j+currentID[1])/2).toString();
@@ -170,7 +165,13 @@ function makeMove(squareElement, i, j) {
 
         console.log(boardPos);
 
-        то оновлювати шось і рекурсію в цей метод
+        currentWhiteMove = !currentWhiteMove;
+        currentSquare = null;
+
+        //потрібно додати перевірку чи можна далі бити
+        //if () {}
+        //currentWhiteMove = !currentWhiteMove;
+        //currentSquare = null;
     }
 
 
