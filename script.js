@@ -18,11 +18,43 @@ let boardPos = [[-1, 2, -1, 2, -1, 2, -1, 2],
     [-1, 1, -1, 1, -1, 1, -1, 1],
     [1, -1, 1, -1, 1, -1, 1, -1]];
 
-//white for start буде висіти менюшка
-//createMenu
-//destroy/hideMenu
 
-createMarking();
+showMenu();
+
+function showMenu() {
+    let originalDisplay = board.style.display;
+    board.style.display = "none";
+
+    let menu = document.createElement('div');
+    menu.className = 'menu';
+
+    let image = document.createElement('img');
+    image.src = "images/text.png";
+    menu.appendChild(image);
+
+    let checker = document.createElement('img');
+    checker.src = "images/whiteQ.png";
+    //checker.className = 'rotate';
+    menu.appendChild(checker);
+
+    let helpInfo = document.createElement('img');
+    helpInfo.src = "images/help.png";
+    menu.appendChild(helpInfo);
+
+    document.body.appendChild(menu);
+
+    checker.addEventListener('click', function() {
+        startGame(menu, originalDisplay);
+    });
+}
+
+function startGame(menu, originalDisplay) {
+    
+    menu.remove();
+    board.style.display = originalDisplay;
+    createMarking();
+    
+}
 
 function createMarking(){
 
@@ -118,7 +150,7 @@ function makeMove(squareElement, i, j) {
             }
 
         }
-        else{
+        else if(boardPos[currentID[0]][currentID[1]] === 2){
             //black
             if(i < currentID[0]){
                 return;
@@ -175,63 +207,36 @@ function makeMove(squareElement, i, j) {
     }
 
 
+    else if(boardPos[currentID[0]][currentID[1]] === 3){
+
+        if(boardPos[i][j] !== 0)
+            return;
+
+        let difference = (i * 10 + j) - (currentID[0] * 10 + currentID[1]);
+        console.log(difference);
+        if(difference != 11 || difference != -11 || difference != 9 || difference != -9)
+            return;
+
+        //перевіряти перстрибування шашок
+        console.log("типу мув");
+
+    }
+
+    
+    //створення дамки
+    if(i === 0 && boardPos[i][j] === 1){
+
+        squareElement.style.backgroundImage = "url(images/whiteQG.png)";
+        boardPos[i][j] = 3;
+
+    }else if(i === 7 && boardPos[i][j] === 2){
+
+        squareElement.style.backgroundImage = "url(images/blackQG.png)";
+        boardPos[i][j] = 4;
+
+    }
+
+
 
 
 }
-
-
-/*function makeMove(squareElement) {
-
-   
-
-        if (currentSquare && squareElement.style.backgroundColor == 'gray') {
-
-            let diff = squareElement.id - currentSquare.id;
-
-            if (document.getElementById(squareElement.id.checker != 'none')) {}
-
-            
-
-            if((diff == 7 || diff == 9) && currentSquare.checker == 'w')
-                return;
-                
-            if((diff == -7 || diff == -9) && currentSquare.checker == 'b')
-                return;
-                
-            if(diff != 7 && diff != 9 && diff != -9 && diff != -7)
-                return;
-                
-            if (squareElement.checker === 'none') {
-
-                squareElement.style.backgroundImage = currentSquare.style.backgroundImage;
-                currentSquare.style.backgroundColor = 'gray';
-                currentSquare.style.backgroundImage = null;
-
-                squareElement.checker = currentSquare.checker;
-                currentSquare.checker = 'none';
-
-                currentWhiteMove = !currentWhiteMove;
-                currentSquare = null;
-
-            }else if(squareElement.checker != currentSquare.checker){
-
-            }
-
-    }
-}*/
-
-// обробник натискання на квадрат типу куди перемістити фігуру
-// глобальну змінну чий хід
-// з індексами бавитись
-
-
-
-
-
-
-
-
-
-
-
-
