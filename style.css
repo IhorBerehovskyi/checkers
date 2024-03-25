@@ -24,7 +24,7 @@
 
 }
 
-.menu {
+#menu {
     width: 75vh;
     height: 75vh;
     position: absolute;
@@ -37,7 +37,7 @@
     align-items: center;
 }
 
-.menu img {
+#menu img {
     max-width: 100%;
     max-height: 100%;
     width: auto;
@@ -46,7 +46,7 @@
     object-fit: contain;
 }
 
-.menu img:nth-child(2) {
+#menu img:nth-child(2) {
     animation: rotateImage 5s linear infinite;
 }
 
@@ -58,7 +58,7 @@
 
 @media (orientation: portrait) {
 
-    .menu {
+    #menu {
         width: 75vw;
         height: 75vw;
     }
@@ -76,7 +76,7 @@
 
 @media (orientation: landscape) {
 
-    .menu {
+    #menu {
         width: 75vh;
         height: 75vh;
     }

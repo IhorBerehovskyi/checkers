@@ -1,62 +1,32 @@
-const SQUARES_COUNT = 64;
-const WHITE_CHECKER = 1;
-const BLACK_CHECKER = 2;
-const NO_CHECKER = 0;
-
-let board = document.getElementById('cBoard');
+let boardPos = [[-1, 2, -1, 2, -1, 2, -1, 2],
+                [2, -1, 2, -1, 2, -1, 2, -1],
+                [-1, 2, -1, 2, -1, 2, -1, 2],
+                [0, -1, 0, -1, 0, -1, 0, -1],
+                [-1, 0, -1, 0, -1, 0, -1, 0],
+                [1, -1, 1, -1, 1, -1, 1, -1],
+                [-1, 1, -1, 1, -1, 1, -1, 1],
+                [1, -1, 1, -1, 1, -1, 1, -1]];
 
 let currentSquare = null;
-
 let currentWhiteMove = true;
-
-let boardPos = [[-1, 2, -1, 2, -1, 2, -1, 2],
-    [2, -1, 2, -1, 2, -1, 2, -1],
-    [-1, 2, -1, 2, -1, 2, -1, 2],
-    [0, -1, 0, -1, 0, -1, 0, -1],
-    [-1, 0, -1, 0, -1, 0, -1, 0],
-    [1, -1, 1, -1, 1, -1, 1, -1],
-    [-1, 1, -1, 1, -1, 1, -1, 1],
-    [1, -1, 1, -1, 1, -1, 1, -1]];
-
 
 showMenu();
 
 function showMenu() {
-    let originalDisplay = board.style.display;
-    board.style.display = "none";
-
-    let menu = document.createElement('div');
-    menu.className = 'menu';
-
-    let image = document.createElement('img');
-    image.src = "images/text.png";
-    menu.appendChild(image);
-
-    let checker = document.createElement('img');
-    checker.src = "images/whiteQ.png";
-    //checker.className = 'rotate';
-    menu.appendChild(checker);
-
-    let helpInfo = document.createElement('img');
-    helpInfo.src = "images/help.png";
-    menu.appendChild(helpInfo);
-
-    document.body.appendChild(menu);
-
+    
+    let menu = document.getElementById('menu');
+ 
     checker.addEventListener('click', function() {
-        startGame(menu, originalDisplay);
+        menu.remove();
+        createMarking();
     });
 }
 
-function startGame(menu, originalDisplay) {
-    
-    menu.remove();
-    board.style.display = originalDisplay;
-    createMarking();
-    
-}
-
 function createMarking(){
+
+    let board = document.createElement('div');
+    board.className = "board";
+    document.body.appendChild(board);
 
     for(let i = 0; i < boardPos.length; i++){
         for (let j = 0; j < boardPos[0].length; j++) {
@@ -93,15 +63,13 @@ function squareClick(squreId, i, j) {
     }
 
     setFocus(squareElement, i, j);
-
     makeMove(squareElement, i, j);
-
 }
 
 function setFocus(squareElement, i , j) {
 
-    if ((boardPos[i][j] == 1 && !currentWhiteMove) 
-        || (boardPos[i][j] == 2 && currentWhiteMove)
+    if ((boardPos[i][j] % 2 !== 0 && !currentWhiteMove) 
+        || (boardPos[i][j] % 2 === 0 && currentWhiteMove)
         || (boardPos[i][j] == 0)){
 
             return;
@@ -125,10 +93,6 @@ function makeMove(squareElement, i, j) {
         return;
 
     }
-
-    //маю id куди маю попасти
-    //маю елемент з якого буду стрибати
-    //маю id шашки яка буде стрибати
 
     let currentID = currentSquare.id.split('').map(Number);
 
@@ -177,7 +141,7 @@ function makeMove(squareElement, i, j) {
         if(boardPos[i][j] !== 0 || (boardPos[(i+currentID[0])/2][(j+currentID[1])/2] === 0))
             return;
 
-        if(boardPos[currentID[0]][currentID[1]] === boardPos[(i+currentID[0])/2][(j+currentID[1])/2])
+        if(boardPos[currentID[0]][currentID[1]] % 2 === boardPos[(i+currentID[0])/2][(j+currentID[1])/2] % 2)
             return;
 
 
@@ -205,23 +169,6 @@ function makeMove(squareElement, i, j) {
         //currentWhiteMove = !currentWhiteMove;
         //currentSquare = null;
     }
-
-
-    else if(boardPos[currentID[0]][currentID[1]] === 3){
-
-        if(boardPos[i][j] !== 0)
-            return;
-
-        let difference = (i * 10 + j) - (currentID[0] * 10 + currentID[1]);
-        console.log(difference);
-        if(difference != 11 || difference != -11 || difference != 9 || difference != -9)
-            return;
-
-        //перевіряти перстрибування шашок
-        console.log("типу мув");
-
-    }
-
     
     //створення дамки
     if(i === 0 && boardPos[i][j] === 1){
@@ -235,8 +182,4 @@ function makeMove(squareElement, i, j) {
         boardPos[i][j] = 4;
 
     }
-
-
-
-
 }
