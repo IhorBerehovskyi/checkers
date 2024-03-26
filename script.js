@@ -1,6 +1,6 @@
-let boardPos = [[-1, 2, -1, 2, -1, 2, -1, 2],
-                [2, -1, 2, -1, 2, -1, 2, -1],
-                [-1, 2, -1, 2, -1, 2, -1, 2],
+let boardPos = [[-1, 0, -1, 0, -1, 0, -1, 0],
+                [0, -1, 0, -1, 0, -1, 0, -1],
+                [-1, 0, -1, 2, -1, 0, -1, 0],
                 [0, -1, 0, -1, 0, -1, 0, -1],
                 [-1, 0, -1, 0, -1, 0, -1, 0],
                 [1, -1, 1, -1, 1, -1, 1, -1],
@@ -9,6 +9,9 @@ let boardPos = [[-1, 2, -1, 2, -1, 2, -1, 2],
 
 let currentSquare = null;
 let currentWhiteMove = true;
+
+let whiteNumber = 12;
+let blackNumber = 1;
 
 showMenu();
 
@@ -26,6 +29,7 @@ function createMarking(){
 
     let board = document.createElement('div');
     board.className = "board";
+    board.id = "boardId"
     document.body.appendChild(board);
 
     for(let i = 0; i < boardPos.length; i++){
@@ -109,7 +113,6 @@ function makeMove(squareElement, i, j) {
         if(boardPos[currentID[0]][currentID[1]] === 1){
 
             if(i > currentID[0]){
-                //цього не буде якшо дамка
                 return;
             }
 
@@ -159,10 +162,14 @@ function makeMove(squareElement, i, j) {
         console.log(deletedId);
         document.getElementById(deletedId).style.backgroundImage = null;
 
+        currentWhiteMove ? --blackNumber : --whiteNumber;
         console.log(boardPos);
 
         currentWhiteMove = !currentWhiteMove;
         currentSquare = null;
+
+        if (whiteNumber === 0 || blackNumber === 0)
+            finishGame();
 
         //потрібно додати перевірку чи можна далі бити
         //if () {}
@@ -182,4 +189,40 @@ function makeMove(squareElement, i, j) {
         boardPos[i][j] = 4;
 
     }
+}
+
+function finishGame(){
+
+    document.getElementById('boardId').remove();
+
+    let finishDiv = document.createElement('div');
+    finishDiv.id = "finishDiv";
+    document.body.appendChild(finishDiv);
+
+    let finishLabel = document.createElement('div');
+    finishLabel.id = "finishLabel";
+    finishLabel.textContent = (whiteNumber === 0 ? "Black" : "White") + " win"; 
+    finishDiv.appendChild(finishLabel);
+
+    let restartButton = document.createElement('button');
+    restartButton.textContent = 'RESTART GAME'; 
+    restartButton.id = 'restartButton';
+
+    restartButton.addEventListener('click', function() {    
+        location.reload();
+    });
+
+    finishDiv.appendChild(restartButton);
+
+  let confetti = new JSConfetti();
+
+    confetti.addConfetti({
+        emojis: ['🙾', '⚪', '⚫'],
+    });
+
+    setInterval(function() {
+        confetti.addConfetti({
+            emojis: ['🙾', '⚪', '⚫'],
+        });
+    }, 3000);
 }
