@@ -1,6 +1,8 @@
+html {
+     user-select: none;
+}
+
 .board {
-    width: 75vh;
-    height: 75vh;
     background-color: #f0f0f0;
     border: 1px solid grey;
     position: absolute;
@@ -25,8 +27,6 @@
 }
 
 #menu {
-    width: 75vh;
-    height: 75vh;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -40,13 +40,15 @@
 #menu * {
     text-align: center;
     font-family: 'Comfortaa', sans-serif;
-    font-size: 80px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 4vw;
 }
 
 #info {
-
     color: #9c9c9c;
-    font-size: 28px;
+    font-size: 2.8vh;
 }
 
 #menu img {
@@ -75,6 +77,7 @@
 #finishLabel {
     font-size: 120px;
     font-family: 'Comfortaa', sans-serif;
+    text-align: center;
 }
 
 #restartButton {
@@ -108,6 +111,12 @@
         height: 75vw;
     }
 
+
+    #finishDiv {
+        width: 75vw;
+        height: 75vw;
+    }
+
     .board {
         width: 75vw;
         height: 75vw; 
@@ -126,6 +135,11 @@
         height: 75vh;
     }
 
+    #finishDiv {
+        width: 75vh;
+        height: 75vh;
+    }
+
     .board {
         width: 75vh;
         height: 75vh; 
@@ -137,7 +151,58 @@
     }
 }
 
+@media (max-width: 1100px){
+
+    #menu * {
+        font-size: 6vw;
+    }
+
+    #info {
+        color: #9c9c9c;
+        font-size: 2.8vh;
+    }
+
+
+    #menu img {
+        max-width: 50%;
+        max-height: 50%;
+    }
+
+}
+
+@media (max-width: 768px){
+
+    #menu * {
+        font-size: 9vw;
+    }
+
+    #info {
+        color: #9c9c9c;
+        font-size: 2.8vh;
+    }
+
+    #menu img {
+        max-width: 50%;
+        max-height: 50%;
+    }
+
+    #finishLabel {
+        font-size: 60px;
+    }
+
+}
+
 @media (max-width: 800px) and (orientation: portrait) {
+
+    #menu {
+        width: 90vw;
+        height: 90vw;
+    }
+
+    #finishDiv {
+        width: 90vw;
+        height: 90vw;
+    }
 
     .board {
         width: 90vw;
@@ -151,6 +216,16 @@
 }
 
 @media (max-height: 600px) and (orientation: landscape) {
+
+    #menu {
+        width: 90vh;
+        height: 90vh;
+    }
+
+    #finishDiv {
+        width: 90vh;
+        height: 90vh;
+    }
 
     .board {
         width: 90vh;

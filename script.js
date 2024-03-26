@@ -1,6 +1,6 @@
-let boardPos = [[-1, 0, -1, 0, -1, 0, -1, 0],
-                [0, -1, 0, -1, 0, -1, 0, -1],
-                [-1, 0, -1, 2, -1, 0, -1, 0],
+let boardPos = [[-1, 2, -1, 2, -1, 2, -1, 2],
+                [2, -1, 2, -1, 2, -1, 2, -1],
+                [-1, 2, -1, 2, -1, 2, -1, 2],
                 [0, -1, 0, -1, 0, -1, 0, -1],
                 [-1, 0, -1, 0, -1, 0, -1, 0],
                 [1, -1, 1, -1, 1, -1, 1, -1],
@@ -11,7 +11,7 @@ let currentSquare = null;
 let currentWhiteMove = true;
 
 let whiteNumber = 12;
-let blackNumber = 1;
+let blackNumber = 12;
 
 showMenu();
 
@@ -170,11 +170,6 @@ function makeMove(squareElement, i, j) {
 
         if (whiteNumber === 0 || blackNumber === 0)
             finishGame();
-
-        //потрібно додати перевірку чи можна далі бити
-        //if () {}
-        //currentWhiteMove = !currentWhiteMove;
-        //currentSquare = null;
     }
     
     //створення дамки
@@ -214,7 +209,7 @@ function finishGame(){
 
     finishDiv.appendChild(restartButton);
 
-  let confetti = new JSConfetti();
+    let confetti = new JSConfetti();
 
     confetti.addConfetti({
         emojis: ['🙾', '⚪', '⚫'],
